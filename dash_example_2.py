@@ -38,13 +38,13 @@ app.layout = html.Div([
                    value="happiness_score"),
                 
     dcc.Graph(id = "Happiness_Graph" ),
-    # dcc.
+    html.Div(id="avg_index")
 
 ])
 
 @app.callback(
     Output("Happiness_Graph",'figure'),
-
+    Output("avg_index","children"),
     
     Input(component_id="Country_dropdown",component_property='value'),
     Input("Graph_select",'value'),
@@ -56,8 +56,8 @@ def updateGraph(selected_country,selected_graph):
                       x='year',
                       y=selected_graph,
                       title=f'{selected_graph} in {selected_country}')
-
-    return line_fig
+    avg_val = df_filtered[selected_graph].mean()  
+    return line_fig, f"the average value of {selected_graph} for {selected_country} is {avg_val}"
 
 
 if __name__ == "__main__":
