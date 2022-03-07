@@ -38,6 +38,7 @@ app.layout = html.Div([
                    value="happiness_score"),
                 
     dcc.Graph(id = "Happiness_Graph" ),
+    # dcc.
 
 ])
 
@@ -54,7 +55,7 @@ def updateGraph(selected_country,selected_graph):
     line_fig =px.line(df_filtered,
                       x='year',
                       y=selected_graph,
-                      title=f'Happiness Score in {selected_country}')
+                      title=f'{selected_graph} in {selected_country}')
 
     return line_fig
 
