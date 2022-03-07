@@ -31,7 +31,7 @@ app.layout = html.Div(
         # dcc.Checklist(options=Regions, value=["North America"]),
         dcc.Dropdown(id="Country_dropdown", 
         # options=Country,  CallBack included
-        value="United States" 
+        # value="United States" CallBack Output
         ),
         dcc.RadioItems(
             id="Graph_select",
@@ -47,14 +47,17 @@ app.layout = html.Div(
 )
 
 
-@app.callback(Output("Country_dropdown", "options"), Input("Region_Radio", "value"))
+@app.callback(
+    Output("Country_dropdown", "options"), 
+    Output("Country_dropdown", "value"), 
+    Input("Region_Radio", "value"))
 def updateDropdown(selcted_region):
     Country_options = [
         {"label": i, "value": i}
         for i in happiness[happiness["region"] == selcted_region]["country"].unique()
     ]
 
-    return Country_options
+    return Country_options, Country_options[0]['value']
 
 
 @app.callback(
