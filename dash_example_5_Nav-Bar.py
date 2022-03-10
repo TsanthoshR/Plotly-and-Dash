@@ -6,6 +6,42 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 
+soccer = pd.read_csv('downloads/fifa_soccer_players.csv')
+
+avg_age = soccer['age'].mean()
+avg_height = soccer['height_cm'].mean()
+avg_weight = soccer['weight_kg'].mean()
+
+cards =dbc.CardDeck([
+    dbc.Card(
+        dbc.CardBody([
+            html.H4('Avg. Age'),
+            html.H5(f'{round(avg_age),1} years')
+            
+        ]),
+        style = {'testAlign':'centre','color':'weight'},
+        color='lightblue'
+    ),
+    dbc.Card(
+        dbc.CardBody([
+            html.H4('Avg. Height'),
+            html.H5(f'{round(avg_height),1} years')
+            
+        ]),
+        style = {'testAlign':'centre','color':'weight'},
+        color='blue'
+    ),
+    dbc.Card(
+        dbc.CardBody([
+            html.H4('Avg. Weight'),
+            html.H5(f'{round(avg_weight),1} years')
+            
+        ]),
+        style = {'testAlign':'centre','color':'weight'},
+        color='darkblue'
+    ),
+])
+
 navbar = dbc.NavbarSimple(
     brand ='Soccer Players Dashboard',
     children = [
@@ -27,7 +63,9 @@ app = dash.Dash(
                 )
 
 app.layout = html.Div([
-    navbar
+    navbar,
+    html.Br(),
+    cards,
 ])
 
 
