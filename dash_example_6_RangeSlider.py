@@ -9,6 +9,18 @@ import plotly.express as px
 elec = pd.read_csv("./downloads/electricity.csv")
 year_min = elec['Year'].min()
 year_max = elec['Year'].max()
+
+
+avg_price_elec = elec.groupby('US_State')['Residential Price'].mean().reset_index()
+
+map_fig = px.choropleth(avg_price_elec,
+                        locations = 'US_State',
+                        locationmode="USA-states",
+                        color = 'Residential Price',
+                        scope ='usa',
+                        color_continuous_scale = "reds"
+                        )
+
 app = dash.Dash(
     external_stylesheets = [dbc.themes.YETI]
 )
@@ -19,7 +31,11 @@ app.layout = html.Div([
                     min=year_min,
                     max=year_max,
                     value=[year_min,year_max],
-                    marks={i:str(i) for i in range(year_min,year_max+1)})
+                    marks={i:str(i) for i in range(year_min,year_max+1)}),
+
+    dcc.Graph(id="map_graph",
+              figure= map_fig,
+              )
 ])
 
 
