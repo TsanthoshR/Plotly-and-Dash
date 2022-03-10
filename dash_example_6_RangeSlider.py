@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
+from dash import dash_table
 
 elec = pd.read_csv("./downloads/electricity.csv")
 year_min = elec['Year'].min()
@@ -35,7 +36,12 @@ app.layout = html.Div([
 
     dcc.Graph(id="map_graph",
               figure= map_fig,
-              )
+              ),
+
+    dash_table.DataTable(id='price-info',
+                         columns=[ {'name':col,'id':col}  for col in elec.columns ],
+                         data=elec.to_dict('records')
+                         )
 ])
 
 
